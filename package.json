@@ -1,0 +1,17 @@
+{
+  "name": "leper",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "某个数据的解密工具",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "ll",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "axios": "^1.6.8",
+    "jszip": "^3.10.1"
+  }
+}
