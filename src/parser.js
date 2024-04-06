@@ -19,7 +19,7 @@ export default class Config {
   preloadConfigerList = []
   initConfigerList() {
     this.preloadConfigerList.length = 0
-    this.preloadConfigerList = ['gn_dbs_quest', 'ff_exchange_new','ff_dbs_lottery_new']
+    this.preloadConfigerList = ['gn_dbs_quest', 'ff_exchange_new', 'ff_dbs_lottery_new', 'sys_treasure_chest']
   }
 
   ParsePreloadConfig(data) {
@@ -45,10 +45,12 @@ export default class Config {
     for (let i = 0; i < length; i++) {
       let configName = this.preloadConfigerList[i]
       let data = this.WorkParse(this.getZipConfigData(configName))
-      fs.writeFile(`./dist/config/${configName}.json`, data, function (err) {
-        if (err) console.log(err)
+      try {
+        fs.writeFileSync(`./dist/config/${configName}.json`, data)
         console.log(`解析配置${configName}`)
-      })
+      } catch (error) {
+        console.log(err)
+      }
     }
   }
 
@@ -83,10 +85,11 @@ export default class Config {
     let baseData = this.crypt.Ofb_Dec(data)
     // let plain = gunzipSync(baseData)
     let plain = zlib.gunzipSync(Buffer.from(baseData))
+    const arrayBuffer = plain.buffer.slice(plain.byteOffset, plain.byteOffset + plain.byteLength)
 
     let temp = new Byte()
     temp.endian = Byte.LITTLE_ENDIAN
-    temp.writeArrayBuffer(plain.buffer)
+    temp.writeArrayBuffer(arrayBuffer)
     temp.pos = 0
     let res = temp.readUTFBytes()
     return res

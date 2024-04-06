@@ -353,16 +353,14 @@ export default class Byte {
   getUTFString() {
     return this.readUTFString()
   }
-  readUTFBytes() {
-    var len = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : -1
+  readUTFBytes(len = -1) {
     if (len === 0) return ''
     var lastBytes = this.bytesAvailable
     if (len > lastBytes) throw new Error('readUTFBytes error - Out of bounds' + this.protocolId)
     len = len > 0 ? len : lastBytes
     return this._rUTF(len)
   }
-  getUTFBytes() {
-    var len = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : -1
+  getUTFBytes(len = -1) {
     return this.readUTFBytes(len)
   }
   writeByte(value) {
