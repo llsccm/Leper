@@ -1,6 +1,6 @@
 {
   "name": "leper",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "type": "module",
   "description": "某个数据的解密工具",
   "main": "index.js",
