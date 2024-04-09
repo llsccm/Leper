@@ -1,5 +1,5 @@
 import zlib from 'zlib'
-import Byte from './utils/Byte.js'
+// import Byte from './utils/Byte.js'
 import CtrUtil from './utils/CtrUtil.js'
 // import { gunzipSync } from './utils/zlib.cjs'
 import fs from 'fs'
@@ -67,8 +67,10 @@ export default class Config {
       }
     }
 
+    console.log('找不到配置文件：', configName)
     return null
   }
+
   /**
    *
    * @param {ArrayBuffer} data zip data
@@ -85,13 +87,15 @@ export default class Config {
     let baseData = this.crypt.Ofb_Dec(data)
     // let plain = gunzipSync(baseData)
     let plain = zlib.gunzipSync(Buffer.from(baseData))
-    const arrayBuffer = plain.buffer.slice(plain.byteOffset, plain.byteOffset + plain.byteLength)
+    // const arrayBuffer = plain.buffer.slice(plain.byteOffset, plain.byteOffset + plain.byteLength)
 
-    let temp = new Byte()
-    temp.endian = Byte.LITTLE_ENDIAN
-    temp.writeArrayBuffer(arrayBuffer)
-    temp.pos = 0
-    let res = temp.readUTFBytes()
+    // let temp = new Byte()
+    // temp.endian = Byte.LITTLE_ENDIAN
+    // temp.writeArrayBuffer(arrayBuffer)
+    // temp.pos = 0
+    // let res = temp.readUTFBytes()
+    const dec = new TextDecoder()
+    let res = dec.decode(plain)
     return res
   }
 }
